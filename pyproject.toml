@@ -1,4 +1,11 @@
 [project]
 name = "DevForge"
-version = "Alhpa 1.0.0"
-dependencies = ["pyqt6", "sqlite3"]
+version = "1.0a"
+description = "A local project manger for developers."
+authors = [
+    {name = "Moulay Ali \"Snophix\" Balouz", email = "ali.balouz98@gmail.com"},
+    {name = "Sidox", email = "sidox9a@gmail.com"}
+]
+readme = "README.md"
+license = "GPL-3.0-or-later"
+dependencies = ["PyQt6", "pysqlite3"]
