@@ -1,0 +1,4 @@
+[project]
+name = "DevForge"
+version = "Alhpa 1.0.0"
+dependencies = ["pyqt6", "sqlite3"]
