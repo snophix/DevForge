@@ -2,8 +2,8 @@
 A local project manager for developers.
 
 ## Expected features
-[ ] Automatic envirenment setup (using python scripting)
-[ ] Automatically open project with the preferred editor (with the proper arguments)
+- [ ] Automatic envirenment setup (using python scripting)
+- [ ] Automatically open project with the preferred editor (with the proper arguments)
 
 ## License
 
