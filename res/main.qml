@@ -64,6 +64,75 @@ ApplicationWindow {
                     }
                 }
 
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 100
+                    color: "#2a2a2a"
+
+                    Rectangle {
+                        id: customBtn
+                        anchors.centerIn: parent
+                        width: parent.width - 40
+                        height: 50
+                        radius: 12
+        
+                        color: "#fbbf24"
+        
+                        border.color: "#ffffff"
+                        border.width: btnMouseArea.containsMouse ? 2 : 0
+
+                        scale: btnMouseArea.containsMouse ? 1.03 : 1.0
+        
+                        Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
+                        Behavior on color { ColorAnimation { duration: 150 } }
+                        Behavior on border.width { NumberAnimation { duration: 150 } }
+
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 12
+
+                            Text {
+                                text: "+"
+                                font.pixelSize: 22
+                                font.bold: true
+                                color: "#1a1a1a"
+                                rotation: btnMouseArea.containsMouse ? 90 : 0
+                                Behavior on rotation { NumberAnimation { duration: 300; easing.type: Easing.OutQuint } }
+                            }   
+
+                            Text {
+                                text: "Nouveau Projet"
+                                font.pixelSize: 15
+                                font.bold: true
+                                color: "#1a1a1a"
+                                opacity: btnMouseArea.containsMouse ? 1.0 : 0.9
+                            }
+                        }
+
+                        MouseArea {
+                            id: btnMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+
+                            onEntered: {
+                            customBtn.color = "#fcd34d"
+                            }
+                            onExited: {
+                                customBtn.color = "#fbbf24"
+                            }
+                            onPressed: customBtn.scale = 0.95
+                            onReleased: customBtn.scale = 1.03
+                            onClicked: {
+                                console.log("Action : Nouveau Projet")
+                            }
+                        }
+                    }
+                }
+
+
+
                 ListView {
                     id: projectListView
                     Layout.fillWidth: true
@@ -75,7 +144,7 @@ ApplicationWindow {
                     delegate: Rectangle {
                         width: projectListView.width
                         height: 100
-                        color: projectListView.currentIndex === index ? "#333333" : "#242424"
+                        color: "#242424"
 
                         MouseArea {
                             anchors.fill: parent
