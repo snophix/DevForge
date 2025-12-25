@@ -1,5 +1,6 @@
 import os
 import subprocess
+import ast
 
 
 class SetupUtils:
@@ -32,4 +33,15 @@ def setup_environment(scriptPath: str, arguments: dict) -> tuple[int, str]:
 
 
 def get_arguments(scriptPath: str) -> dict:
-    pass
+    scriptFile = open(scriptPath, "r")
+    script = scriptFile.read()
+    scriptDown = script.split("# BEGIN ARGUMENTS")
+    theArguments = ""
+    if len(scriptDown) == 1:
+        theArguments = scriptDown[0].split("# END ARGUMENTS")[0]
+    else:
+        theArguments = scriptDown[1].split("# END ARGUMENTS")[0]
+    
+    expectedArguments = ast.literal_eval(theArguments)
+    return expectedArguments
+        
