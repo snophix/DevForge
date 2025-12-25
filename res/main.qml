@@ -31,19 +31,34 @@ ApplicationWindow {
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 5
-                        Text {
-                            text: "DevForge"
-                            font.pixelSize: 24
-                            font.bold: true
-                            color: "#00d4ff"
+
+                        RowLayout {
+                            spacing: 10
                             Layout.alignment: Qt.AlignHCenter
+
+                            Image {
+                                source: "icons/df-512.png" 
+                                sourceSize.width: 32           
+                                sourceSize.height: 32
+                                fillMode: Image.PreserveAspectFit
+                            }
+
+                            Text {
+                                text: "DevForge"
+                                font.pixelSize: 24
+                                font.bold: true
+                                color: "#00d4ff"
+                                Layout.alignment: Qt.AlignHCenter
+                            }
+                            
                         }
+
                         Text {
-                            text: "Project Manager"
-                            font.pixelSize: 12
-                            color: "#888888"
-                            Layout.alignment: Qt.AlignHCenter
-                        }
+                                text: "Project Manager"
+                                font.pixelSize: 12
+                                color: "#888888"
+                                Layout.alignment: Qt.AlignHCenter
+                            }
                     }
                 }
 
