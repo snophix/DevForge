@@ -20,7 +20,6 @@ ApplicationWindow {
 
             ColumnLayout {
                 id: contentLayout
-
                 anchors.fill: parent
                 spacing: 0
 
@@ -32,7 +31,6 @@ ApplicationWindow {
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 5
-
                         Text {
                             text: "DevForge"
                             font.pixelSize: 24
@@ -40,7 +38,6 @@ ApplicationWindow {
                             color: "#00d4ff"
                             Layout.alignment: Qt.AlignHCenter
                         }
-
                         Text {
                             text: "Project Manager"
                             font.pixelSize: 12
@@ -60,7 +57,7 @@ ApplicationWindow {
 
                     delegate: Rectangle {
                         width: projectListView.width
-                        height: contentLayout.implicitHeight + 30
+                        height: 100
                         color: projectListView.currentIndex === index ? "#333333" : "#242424"
 
                         MouseArea {
@@ -70,7 +67,8 @@ ApplicationWindow {
                             onExited: parent.color = projectListView.currentIndex === index ? "#333333" : "#242424"
                             onClicked: {
                                 projectListView.currentIndex = index
-                                projectManager.selectProject(model.name, model.description, model.status, model.date)
+                                projectManager.selectProject(model.name, model.description, model.status, 
+                                                           model.date, model.language, model.location, model.commits)
                             }
                         }
 
@@ -116,10 +114,6 @@ ApplicationWindow {
                             }
                         }
                     }
-
-                    ScrollBar.vertical: ScrollBar {
-                        policy: ScrollBar.AsNeeded
-                    }
                 }
             }
         }
@@ -142,27 +136,8 @@ ApplicationWindow {
                     ColumnLayout {
                         anchors.centerIn: parent
                         spacing: 15
-
-                        Text {
-                            text: "📁"
-                            font.pixelSize: 64
-                            color: "#444444"
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Text {
-                            text: "Sélectionnez un projet"
-                            font.pixelSize: 20
-                            color: "#666666"
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Text {
-                            text: "Cliquez sur un projet dans la liste pour voir ses détails"
-                            font.pixelSize: 14
-                            color: "#555555"
-                            Layout.alignment: Qt.AlignHCenter
-                        }
+                        Text { text: "📁"; font.pixelSize: 64; Layout.alignment: Qt.AlignHCenter }
+                        Text { text: "Sélectionnez un projet"; font.pixelSize: 20; color: "#666666"; Layout.alignment: Qt.AlignHCenter }
                     }
                 }
 
@@ -175,64 +150,23 @@ ApplicationWindow {
                     RowLayout {
                         Layout.fillWidth: true
                         spacing: 20
-
+                        
                         Rectangle {
-                            Layout.preferredWidth: 60
-                            Layout.preferredHeight: 60
+                            Layout.preferredWidth: 60; Layout.preferredHeight: 60
                             radius: 14
-
-                            Image {
-                                anchors.centerIn: parent
-                                width: 32
-                                height: 32
-                                fillMode: Image.PreserveAspectFit
-
-                                source: projectManager.selectedStatus === "En cours"
-                                    ? "icons/progress.svg"
-                                    : projectManager.selectedStatus === "Terminé"
-                                    ? "icons/done.svg"
-                                    : "icons/planned.svg"
-                            }
+                            color: "#242424"
+                            Text { text: "🚀"; anchors.centerIn: parent; font.pixelSize: 30 }
                         }
-
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            spacing: 5
-
                             Text {
                                 text: projectManager.selectedName
-                                font.pixelSize: 28
-                                font.bold: true
-                                color: "#ffffff"
+                                font.pixelSize: 28; font.bold: true; color: "#ffffff"
                             }
-
                             RowLayout {
                                 spacing: 15
-
-                                Rectangle {
-                                    Layout.preferredWidth: statusLabel.width + 20
-                                    Layout.preferredHeight: 28
-                                    radius: 14
-                                    color: projectManager.selectedStatus === "En cours" ? "#1a4d2e" : 
-                                           projectManager.selectedStatus === "Terminé" ? "#1a3d4d" : "#4d3d1a"
-
-                                    Text {
-                                        id: statusLabel
-                                        anchors.centerIn: parent
-                                        text: projectManager.selectedStatus
-                                        font.pixelSize: 12
-                                        font.bold: true
-                                        color: projectManager.selectedStatus === "En cours" ? "#4ade80" : 
-                                               projectManager.selectedStatus === "Terminé" ? "#60a5fa" : "#fbbf24"
-                                    }
-                                }
-
-                                Text {
-                                    text: "📅 " + projectManager.selectedDate
-                                    font.pixelSize: 13
-                                    color: "#888888"
-                                }
+                                Text { text: "📅 " + projectManager.selectedDate; color: "#888888" }
                             }
                         }
                     }
@@ -240,27 +174,13 @@ ApplicationWindow {
                     Rectangle {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 150
-                        color: "#242424"
-                        radius: 12
-
+                        color: "#242424"; radius: 12
                         ColumnLayout {
-                            anchors.fill: parent
-                            anchors.margins: 25
-                            spacing: 15
-
-                            Text {
-                                text: "Description"
-                                font.pixelSize: 16
-                                font.bold: true
-                                color: "#00d4ff"
-                            }
-
-                            Text {
+                            anchors.fill: parent; anchors.margins: 25
+                            Text { text: "Description"; font.bold: true; color: "#00d4ff" }
+                            Text { 
                                 text: projectManager.selectedDescription
-                                font.pixelSize: 14
-                                color: "#cccccc"
-                                wrapMode: Text.WordWrap
-                                Layout.fillWidth: true
+                                color: "#cccccc"; wrapMode: Text.WordWrap; Layout.fillWidth: true 
                             }
                         }
                     }
@@ -269,53 +189,44 @@ ApplicationWindow {
                         Layout.fillWidth: true
                         columns: 3
                         columnSpacing: 20
-                        rowSpacing: 20
 
                         Repeater {
                             model: [
-                                {title: "Tâches", value: "12/24", icon: "✓"},
-                                {title: "Progression", value: "50%", icon: "📊"},
-                                {title: "Équipe", value: "5 membres", icon: "👥"}
+                                { title: "Langage", value: projectManager.selectedLanguage, iconSource: projectManager.selectedLanguageIcon },
+                                { title: "Localisation", value: projectManager.selectedLocation, icon: "📂" },
+                                { title: "Commits", value: projectManager.selectedCommits + " commits", icon: "🔥" }
                             ]
-
-                            Rectangle {
+                            delegate: Rectangle {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 100
-                                color: "#242424"
-                                radius: 12
+                                color: "#242424"; radius: 12
 
                                 ColumnLayout {
                                     anchors.centerIn: parent
-                                    spacing: 10
-
+        
+       
+                                    Image {
+                                        visible: modelData.iconSource !== undefined
+                                        source: modelData.iconSource || ""
+                                        sourceSize.width: 32
+                                        sourceSize.height: 32
+                                        Layout.alignment: Qt.AlignHCenter
+                                    }
                                     Text {
-                                        text: modelData.icon
+                                        visible: modelData.icon !== undefined
+                                        text: modelData.icon || ""
                                         font.pixelSize: 24
                                         Layout.alignment: Qt.AlignHCenter
                                     }
-
-                                    Text {
-                                        text: modelData.value
-                                        font.pixelSize: 20
-                                        font.bold: true
-                                        color: "#ffffff"
-                                        Layout.alignment: Qt.AlignHCenter
-                                    }
-
-                                    Text {
-                                        text: modelData.title
-                                        font.pixelSize: 12
-                                        color: "#888888"
-                                        Layout.alignment: Qt.AlignHCenter
-                                    }
+                                    Text { text: modelData.value; font.bold: true; color: "#ffffff"; Layout.alignment: Qt.AlignHCenter }
+                                    Text { text: modelData.title; color: "#888888"; Layout.alignment: Qt.AlignHCenter }
                                 }
                             }
+                        
+
                         }
                     }
-
-                    Item {
-                        Layout.fillHeight: true
-                    }
+                    Item { Layout.fillHeight: true }
                 }
             }
         }
