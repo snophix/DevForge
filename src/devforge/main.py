@@ -165,9 +165,13 @@ def main():
     icon = QIcon()
 
     icon.addPixmap(QPixmap(str(res_icon_path / "df-16.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-24.png")))
     icon.addPixmap(QPixmap(str(res_icon_path / "df-32.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-48.png")))
     icon.addPixmap(QPixmap(str(res_icon_path / "df-64.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-128.png")))
     icon.addPixmap(QPixmap(str(res_icon_path / "df-256.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-512.png")))
 
     app.setWindowIcon(icon)
     app.setWindowIcon(icon)
