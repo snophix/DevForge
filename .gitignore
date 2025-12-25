@@ -5,3 +5,5 @@
 **/__pycache__/
 *.egg-info
 /tests/
+*.kdev4
+/.kedv4/
