@@ -2,7 +2,10 @@ import sys
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtQml import QQmlApplicationEngine
 from PyQt6.QtCore import QUrl, QObject, pyqtSlot, pyqtSignal, pyqtProperty, QAbstractListModel, Qt
+from PyQt6.QtGui import QIcon, QPixmap
 from pathlib import Path
+
+
 
 
 def language_icon(language: str) -> str:
@@ -158,8 +161,18 @@ class ProjectManager(QObject):
 
 def main():
     app = QApplication(sys.argv)
-    engine = QQmlApplicationEngine()
+    res_icon_path = Path(__file__).parent.parent.parent / "res" / "icons"
+    icon = QIcon()
 
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-16.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-32.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-64.png")))
+    icon.addPixmap(QPixmap(str(res_icon_path / "df-256.png")))
+
+    app.setWindowIcon(icon)
+    app.setWindowIcon(icon)
+    engine = QQmlApplicationEngine()
+    
     project_model = ProjectModel()
     project_manager = ProjectManager()
 

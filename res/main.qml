@@ -9,6 +9,8 @@ ApplicationWindow {
     title: "DevForge - Project Manager"
     color: "#1a1a1a"
 
+
+
     RowLayout {
         anchors.fill: parent
         spacing: 0
@@ -47,7 +49,7 @@ ApplicationWindow {
                                 text: "DevForge"
                                 font.pixelSize: 24
                                 font.bold: true
-                                color: "#00d4ff"
+                                color: "#fbbf24"
                                 Layout.alignment: Qt.AlignHCenter
                             }
                             
