@@ -125,7 +125,7 @@ ApplicationWindow {
                             onPressed: customBtn.scale = 0.95
                             onReleased: customBtn.scale = 1.03
                             onClicked: {
-                                console.log("Action : Nouveau Projet")
+                                print("Action : Nouveau Projet")
                             }
                         }
                     }
@@ -312,6 +312,46 @@ ApplicationWindow {
 
                         }
                     }
+
+                    Rectangle {
+                        id: deleteBtn
+                        Layout.alignment: Qt.AlignRight
+                        Layout.topMargin: 20
+                        Layout.preferredWidth: 180
+                        Layout.preferredHeight: 45
+                        radius: 10
+                        color: "#3d1a1a"
+                        border.color: "#ef4444"
+                        border.width: deleteMouseArea.containsMouse ? 2 : 1
+
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 10
+                            Text { text: "🗑"; font.pixelSize: 18 }
+                            Text { 
+                                text: "Supprimer le projet"
+                                color: "#ef4444"
+                                font.bold: true
+                                font.pixelSize: 13
+                            }
+                        }
+
+                        scale: deleteMouseArea.pressed ? 0.9 : (deleteMouseArea.containsMouse ? 1.05 : 1.0)
+                        Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
+                        Behavior on color { ColorAnimation { duration: 200 } }
+
+                        MouseArea {
+                            id: deleteMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                print("Suppression du projet : " + projectManager.selectedName)
+                            }
+                        }
+                    }
+                    
+
                     Item { Layout.fillHeight: true }
                 }
             }
