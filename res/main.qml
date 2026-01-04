@@ -125,7 +125,8 @@ ApplicationWindow {
                             onPressed: customBtn.scale = 0.95
                             onReleased: customBtn.scale = 1.03
                             onClicked: {
-                                print("Action : Nouveau Projet")
+                                print("Notifications : Un nouveau projet a été créé.")
+                                dialogManager.openNewProjectDialog()
                             }
                         }
                     }

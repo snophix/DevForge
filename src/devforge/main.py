@@ -1,10 +1,10 @@
 import sys
+from pathlib import Path
+from PyQt6.QtCore import ( QUrl, QObject, pyqtSlot, pyqtSignal, pyqtProperty,QAbstractListModel, Qt, QModelIndex)
+from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtQml import QQmlApplicationEngine
-from PyQt6.QtCore import QUrl, QObject, pyqtSlot, pyqtSignal, pyqtProperty, QAbstractListModel, Qt
-from PyQt6.QtGui import QIcon, QPixmap
-from pathlib import Path
-
+from pop import ProjectDialogManager
 
 
 
@@ -52,6 +52,8 @@ class ProjectModel(QAbstractListModel):
         self._projects = []
         self.load_projects()
 
+    
+
     def rowCount(self, parent=None):
         return len(self._projects)
 
@@ -77,6 +79,24 @@ class ProjectModel(QAbstractListModel):
         elif role == self.CommitsRole:
             return project.commits
         return None
+    
+    def add_project(self, name, description, status, date, language, location):
+        from PyQt6.QtCore import QModelIndex
+    
+        self.beginInsertRows(QModelIndex(), len(self._projects), len(self._projects))
+    
+        new_proj = Project(
+            name=name,
+            description=description,
+            status=status,
+            date=date,
+            language=language,
+            location=location,
+            commits=0
+        )
+    
+        self._projects.append(new_proj)
+        self.endInsertRows()
 
     def roleNames(self):
         return {
@@ -179,9 +199,13 @@ def main():
     
     project_model = ProjectModel()
     project_manager = ProjectManager()
+    dialog_manager = ProjectDialogManager()
+
+    dialog_manager.projectCreated.connect(project_model.add_project)
 
     engine.rootContext().setContextProperty("projectModel", project_model)
     engine.rootContext().setContextProperty("projectManager", project_manager)
+    engine.rootContext().setContextProperty("dialogManager", dialog_manager)
 
     qml_file = Path(__file__).parent.parent.parent / "res" / "main.qml"
     engine.load(QUrl.fromLocalFile(str(qml_file)))
@@ -190,6 +214,7 @@ def main():
         sys.exit(-1)
 
     sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     main()
